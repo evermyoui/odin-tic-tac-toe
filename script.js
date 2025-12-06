@@ -42,10 +42,10 @@ class Player {
         this.p1 = p1;
         this.p2 = p2;
         this.players = [{
-            player: p1,
+            name: p1,
             mark: "X"
         },{
-            player: p2,
+            name: p2,
             mark: "O"
         }];
         this.activePlayer = this.players[0];
@@ -81,17 +81,12 @@ class Game {
             return;
         }
         cell.addMark(activePlayer.mark);
-        this.printNewRound();
-    }
-    printNewRound(){
+
         this.board_class.printBoard();
         this.checkWin();
-        if (!this.winner){
+
+        if (!this.hasWon){
             this.player_class.switchPlayer();
-        }
-        if (this.hasWon){
-            this.winner = null;
-            this.board_class.resetBoard();
         }
     }
     checkWin(){
@@ -113,103 +108,17 @@ class Game {
             const pattern3 = pattern[2];
             
             if (mappedBoard[pattern1] !== null && mappedBoard[pattern1] === mappedBoard[pattern2] && mappedBoard[pattern1] === mappedBoard[pattern3]){
-                this.winner = this.player_class.getActivePlayer().player;
+                this.winner = this.player_class.getActivePlayer().name;
                 this.hasWon = true;
                 console.log(`The Winner is : ${this.winner}`);
                 return;
             }
+        }
 
-            if (!mappedBoard.includes(null)){
+        if (!mappedBoard.includes(null)){
                 this.winner = "TIE";
                 console.log(this.winner);
                 return;
-            }
         }
     }
 }
-
-const game = new Game();
-game.placeMark(0,0);
-game.placeMark(1,2);
-game.placeMark(0,1);
-game.placeMark(1,0);
-game.placeMark(0,2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function Board(){
-//     const row = 3;
-//     const column = 3;
-//     const board = [];
-
-//     for(let i = 0; i< row; i++){
-//         board[i]= [];
-//         for(let j = 0; j < column; j++){
-//             board[i].push(Cell());
-//         }
-//     }
-//     const printBoard = () => {
-//         const boardWithValues = board.map((row)=> row.map((cell)=> cell.getValue()));
-//         console.log(boardWithValues);
-//     }
-
-//     const setMark = (column) => {
-//         const availableCells = board.filter((row)=> row[column] === "").map(row=> row[column]);
-//         board[]
-//     }
-//     return {
-//         printBoard
-//     }
-
-// }
-// function Cell(){
-//     let value = "";
-
-//     const addMark = (mark) => {
-//         value = mark;
-//     }
-//     const getValue = () => value;
-
-//     return {
-//         addMark, getValue
-//     }
-// }
-// function Player(p1 = "PlayerOne", p2 = "PlayerTwo"){
-//     const players = [{
-//         name: p1,
-//         value: "X"
-//     }, {
-//         name: p2,
-//         value: "O"
-//     }];
-    
-//     let activePlayer = players[0];
-
-//     const switchPlayer = () =>{
-//         activePlayer = activePlayer === players[0] ? players[1] : players[0];
-//     }
-//     const getActivePlayer = () => activePlayer;
-
-//     return {
-//         switchPlayer, getActivePlayer
-//     }
-// }
-// function Game(){
-//     const board = Board();
-    
-//     const printNewRound = () => board.printBoard();
-
-//     const playRound = () => {
-
-//     }
-// }

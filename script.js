@@ -81,6 +81,9 @@ class Game {
             return;
         }
         cell.addMark(activePlayer.mark);
+        this.printNewRound();
+    }
+    printNewRound(){
         this.board_class.printBoard();
         this.checkWin();
         if (!this.winner){
@@ -88,7 +91,7 @@ class Game {
         }
         if (this.hasWon){
             this.winner = null;
-            
+            this.board_class.resetBoard();
         }
     }
     checkWin(){

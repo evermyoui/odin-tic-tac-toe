@@ -7,28 +7,33 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <h1>Tic Tac Toe</h1>
-    </div>
     <div class="container">
+        <div>
+            <div>Tic</div>
+            <div>Tac</div>
+            <div>Toe</div>
+        </div>
         <div class="game">
             <div>
                 <h2>Player One</h2>
             </div>
             <div class="gameboard">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
+                <div cellRow = "0" cellCol ="0" class="cell"></div>
+                <div cellRow = "0" cellCol ="1" class="cell"></div>
+                <div cellRow = "0" cellCol ="2" class="cell"></div>
+                <div cellRow = "1" cellCol ="0" class="cell"></div>
+                <div cellRow = "1" cellCol ="1" class="cell"></div>
+                <div cellRow = "1" cellCol ="2" class="cell"></div>
+                <div cellRow = "2" cellCol ="0" class="cell"></div>
+                <div cellRow = "2" cellCol ="1" class="cell"></div>
+                <div cellRow = "2" cellCol ="2" class="cell"></div>
             </div>
             <div class="p2">
                 <h2>Player Two</h2>
             </div>
+        </div>
+        <div>
+            <button>Restart</button>
         </div>
     </div>
     <script src="script.js"></script>

@@ -4,18 +4,40 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
+body {
+    height: 100vh;
+}
 
 .container {
     display: flex;
-    min-height: 100vh;
+    height: 100%;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+.container > div:nth-child(1){
+    margin-bottom: 100px;
+    border: 2px solid black;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.container > div:nth-child(1) > div {
+    border: 1px solid black;
 }
 
 .game {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+}
+
+.game > div:nth-child(1) {
+    display: flex;
+    align-items: center;
 }
 
 .gameboard {
@@ -25,13 +47,32 @@
     height: 300px;
     width: 300px;
     gap: 2px;
+    border: 2px solid black;
 }
 
 .p2 {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .cell {
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.x {
+    font-size: 54px;
+    background-color: black;
+    color: white;
+}
+.o {
+    font-size: 54px;
+    background-color: white;
+    color: black;
 }

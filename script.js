@@ -1,3 +1,5 @@
+const cells = document.querySelectorAll(".cell");
+
 class Board {
     constructor(){
         this.rows = 3;
@@ -17,7 +19,6 @@ class Board {
     }
     printBoard(){
         const cellWithValues = this.board.map((row)=> row.map((cell)=> cell.getValues()));
-        console.log(cellWithValues);
     }
     getBoard(){
         return this.board;
@@ -65,19 +66,21 @@ class Game {
         this.winner = null;
         this.hasWon = false;
     }
-    placeMark(row, column){
-        if (row > 2 || column > 2){
-            console.log("Out of Bounds");
-            return;
-        }
+    resetGame(){
+        this.board_class.resetBoard();
+        this.hasWon = false;
+        this.winner = null;
+        // i change it to playerTwo because the if statement in the placeMark function will change it to playerOne
+        this.player_class.activePlayer = this.player_class.players[1];
+    }
 
+    placeMark(cellRow, cellCol){
         const activePlayer = this.player_class.getActivePlayer();
         const realBoard = this.board_class.getBoard();
 
-        const cell = realBoard[row][column];
+        const cell = realBoard[cellRow][cellCol];
 
         if (cell.getValues() !== null){
-            console.log("Already Taken");
             return;
         }
         cell.addMark(activePlayer.mark);
@@ -111,6 +114,7 @@ class Game {
                 this.winner = this.player_class.getActivePlayer().name;
                 this.hasWon = true;
                 console.log(`The Winner is : ${this.winner}`);
+                this.resetGame();
                 return;
             }
         }
@@ -122,3 +126,14 @@ class Game {
         }
     }
 }
+
+
+const game = new Game();
+
+cells.forEach((cell)=> {
+    cell.addEventListener("click", ()=>{
+        const cellRow = cell.getAttribute("cellRow");
+        const cellCol = cell.getAttribute("cellCol");
+        game.placeMark(cellRow, cellCol);
+    })
+})

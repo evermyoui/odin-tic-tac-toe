@@ -1,4 +1,6 @@
 const cells = document.querySelectorAll(".cell");
+const restartBtn = document.querySelector("#restartBtn");
+const winner = document.querySelector(".winner");
 
 class Board {
     constructor(){
@@ -16,9 +18,6 @@ class Board {
                 this.board[i].push(new Cell);
             }
         }
-    }
-    printBoard(){
-        const cellWithValues = this.board.map((row)=> row.map((cell)=> cell.getValues()));
     }
     getBoard(){
         return this.board;
@@ -60,18 +59,29 @@ class Player {
 }
 
 class Game {
-    constructor(){
+    constructor(cells){
         this.board_class = new Board();
         this.player_class = new Player();
         this.winner = null;
         this.hasWon = false;
+        this.cells = cells;
+    }
+    displayGame() {
+        const cellWithValues = this.board_class.getBoard().map((row)=> row.map((cell)=> cell.getValues())).flat();
+
+        this.cells.forEach((cell, cellIndex)=>{
+            cell.textContent = cellWithValues[cellIndex] || "";
+        })
     }
     resetGame(){
         this.board_class.resetBoard();
         this.hasWon = false;
         this.winner = null;
-        // i change it to playerTwo because the if statement in the placeMark function will change it to playerOne
-        this.player_class.activePlayer = this.player_class.players[1];
+        this.player_class.activePlayer = this.player_class.players[0];
+        this.cells.forEach((cell)=>{
+            cell.classList.remove("won");
+        });
+        winner.textContent = ``;
     }
 
     placeMark(cellRow, cellCol){
@@ -85,7 +95,6 @@ class Game {
         }
         cell.addMark(activePlayer.mark);
 
-        this.board_class.printBoard();
         this.checkWin();
 
         if (!this.hasWon){
@@ -113,27 +122,38 @@ class Game {
             if (mappedBoard[pattern1] !== null && mappedBoard[pattern1] === mappedBoard[pattern2] && mappedBoard[pattern1] === mappedBoard[pattern3]){
                 this.winner = this.player_class.getActivePlayer().name;
                 this.hasWon = true;
-                console.log(`The Winner is : ${this.winner}`);
-                this.resetGame();
+                pattern.forEach((index)=>{
+                    this.cells[index].classList.add("won");
+                })
+                winner.textContent = `Winner: ${this.winner}`;
                 return;
             }
         }
 
         if (!mappedBoard.includes(null)){
                 this.winner = "TIE";
-                console.log(this.winner);
+                winner.textContent = `${this.winner}`;
                 return;
         }
     }
 }
 
 
-const game = new Game();
+const game = new Game(cells);
 
 cells.forEach((cell)=> {
     cell.addEventListener("click", ()=>{
+        if (game.hasWon){
+            return;
+        }
         const cellRow = cell.getAttribute("cellRow");
         const cellCol = cell.getAttribute("cellCol");
         game.placeMark(cellRow, cellCol);
+        game.displayGame();
     })
+})
+
+restartBtn.addEventListener("click",()=>{
+    game.resetGame();
+    game.displayGame();
 })
